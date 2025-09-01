@@ -78,6 +78,23 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
         if not acertou:
             st.error("❌ Errou ou já estava revelado!")
 
+        if st.button("atualizar"):
+            st.session_state.tentativas += 1
+            chute_norm = normalizar(st.session_state.chute_input)  # pega valor do text_input
+    
+            acertou = False
+            for i, jogador in enumerate(st.session_state.df_top5["jogador"]):
+                if st.session_state.jogo[i] != "____________":
+                    continue
+                partes_nome = [normalizar(p) for p in jogador.split()]
+                if chute_norm in partes_nome or chute_norm == normalizar(jogador):
+                    st.session_state.jogo[i] = jogador
+                    acertou = True
+                    st.success(f"✅ Acertou! {jogador} revelado.")
+                    break
+            if not acertou:
+                st.error("❌ Errou ou já estava revelado!")
+
     # --- Verifica se terminou ---
     if "____________" not in st.session_state.jogo:
         st.subheader("🏆 Resultado Final")
@@ -89,3 +106,4 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas", "chute_input"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
