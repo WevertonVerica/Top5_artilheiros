@@ -29,7 +29,7 @@ if "tentativas" not in st.session_state:
 if "chute_input" not in st.session_state:
     st.session_state.chute_input = ""
 
-st.title("⚽ Desafio dos Artilheiros")
+st.title("⚽ Bora trabalhar!!! Camila")
 
 # --- Escolher ou sortear letra ---
 col1, col2 = st.columns(2)
@@ -119,6 +119,7 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas", "chute_input"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
 
 
 
