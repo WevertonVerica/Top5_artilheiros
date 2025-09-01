@@ -59,12 +59,11 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
         st.write(f"{i}º {nome} ({gols} gols)")
 
     # --- Input para chute ---
-    chute = st.text_input("Digite o nome de um jogador:", st.session_state.chute_input, key="chute_input")
+    chute = st.text_input("Digite o nome de um jogador:", key="chute_input")
 
     if st.button("Chutar"):
         st.session_state.tentativas += 1
-        chute_norm = normalizar(chute)
-        st.session_state.chute_input = ""  # limpa input após clicar
+        chute_norm = normalizar(st.session_state.chute_input)  # pega valor do text_input
 
         acertou = False
         for i, jogador in enumerate(st.session_state.df_top5["jogador"]):
@@ -90,3 +89,4 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas", "chute_input"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
