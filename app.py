@@ -54,7 +54,7 @@ if letra_escolhida and letra_escolhida.upper() in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
 
 # --- Mostra tabela ---
 if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
-    st.write(f"🔤 **Letra atual:** {st.session_state.letra}")
+    st.write(f"🔤 **Acerte os cinco maiores artilheiros do Brasileirão que começe com a letra:** {st.session_state.letra}")
 
     for i, (nome, gols) in enumerate(zip(st.session_state.jogo, st.session_state.df_top5["gols"]), start=1):
         st.write(f"{i}º {nome} ({gols} gols)")
@@ -119,6 +119,7 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas", "chute_input"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
 
 
 
