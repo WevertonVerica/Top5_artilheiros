@@ -54,24 +54,35 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
 
     # --- Input para chute ---
     chute = st.text_input("Digite o nome de um jogador:", value="", key="input_chute")
+ # Input de chute
+chute = st.text_input("Digite o nome de um jogador:")
 
-    if st.button("Chutar"):
-        for _ in range(2):  # repete duas vezes, simulando duplo clique
-            chute_norm = normalizar(chute)
-            st.session_state.tentativas += 1
+# Botão de chute
+if st.button("Chutar"):
+    chute_norm = normalizar(chute)
+    st.session_state.tentativas += 1
+
+    acertou = False
+    for i, jogador in enumerate(st.session_state.df_top5["jogador"]):
+        if st.session_state.jogo[i] != "____________":
+            continue
+        partes_nome = [normalizar(p) for p in jogador.split()]
+        if chute_norm in partes_nome or chute_norm == normalizar(jogador):
+            st.session_state.jogo[i] = jogador
+            acertou = True
+            st.success(f"✅ Acertou! {jogador} revelado.")
+            break
+    if not acertou:
+        st.error("❌ Errou ou já estava revelado!")
+
+# Botão de atualizar top 5
+if st.button("🔄 Atualizar Top 5"):
+    st.write("Top 5 artilheiros:")
+    for i, (nome, gols) in enumerate(zip(st.session_state.jogo, st.session_state.df_top5["gols"]), start=1):
+        st.write(f"{i}º {nome} ({gols} gols)")
+
     
-            acertou = False
-            for i, jogador in enumerate(st.session_state.df_top5["jogador"]):
-                if st.session_state.jogo[i] != "____________":
-                    continue
-                partes_nome = [normalizar(p) for p in jogador.split()]
-                if chute_norm in partes_nome or chute_norm == normalizar(jogador):
-                    st.session_state.jogo[i] = jogador
-                    acertou = True
-                    st.success(f"✅ Acertou! {jogador} revelado.")
-                    break
-            if not acertou:
-                st.error("❌ Errou ou já estava revelado!")
+
     # Verifica se terminou
     if "____________" not in st.session_state.jogo:
         st.subheader("🏆 Resultado Final")
@@ -83,5 +94,3 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
-
-
