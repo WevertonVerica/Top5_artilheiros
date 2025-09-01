@@ -69,10 +69,9 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
                 continue
             partes_nome = [normalizar(p) for p in jogador.split()]
             if chute_norm in partes_nome or chute_norm == normalizar(jogador):
-                st.session_state.jogo[i] = jogador  # 👉 agora atualiza
+                st.session_state.jogo[i] = jogador  # atualiza o nome
                 acertou = True
                 st.success(f"✅ Acertou! {jogador} revelado.")
-                st.experimental_rerun()  # força atualização da tela
                 break
         if not acertou:
             st.error("❌ Errou ou já estava revelado!")
@@ -88,3 +87,4 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
