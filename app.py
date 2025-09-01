@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import random
 import unicodedata
+import time
 
 # Função para remover acentos
 def normalizar(texto):
@@ -120,5 +121,6 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas", "chute_input"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
 
 
