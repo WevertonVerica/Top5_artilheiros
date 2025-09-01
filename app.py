@@ -55,7 +55,7 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
     # --- Input para chute ---
     chute = st.text_input("Digite o nome de um jogador:", value="", key="input_chute")
 
-       if st.button("Chutar"):
+    if st.button("Chutar"):
         for _ in range(2):  # repete duas vezes, simulando duplo clique
             chute_norm = normalizar(chute)
             st.session_state.tentativas += 1
@@ -83,4 +83,5 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
 
