@@ -96,24 +96,18 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             if not acertou:
                 st.error("❌ Errou ou já estava revelado!")
         # Botão desistir
-       # Botão desistir
     if st.button("🚪 Desistir"):
-        st.session_state.desistiu = time.time()  # guarda horário do clique
-    
-    # Se clicou em desistir, mostra top 5 e verifica se 5s se passaram
-    if "desistiu" in st.session_state:
         st.subheader("🏆 Top 5 Artilheiros Revelados")
         for i, (nome, gols) in enumerate(zip(st.session_state.df_top5["jogador"], st.session_state.df_top5["gols"]), start=1):
             st.write(f"{i}º {nome} ({gols} gols)")
+        st.info("Clique em 'Reiniciar' para começar um novo jogo.")
     
-        st.info("A página será reiniciada em 5 segundos...")
-    
-        # Verifica tempo
-        if time.time() - st.session_state.desistiu >= 5:
-            for key in ["letra", "df_top5", "jogo", "tentativas", "desistiu"]:
-                if key in st.session_state:
-                    st.session_state.pop(key)
-            st.experimental_rerun()  
+    # Botão reiniciar
+    if st.button("🔄 Reiniciar"):
+        for key in ["letra", "df_top5", "jogo", "tentativas"]:
+            if key in st.session_state:
+                st.session_state.pop(key)
+        st.experimental_rerun() 
     # --- Verifica se terminou ---
     if "____________" not in st.session_state.jogo:
         st.subheader("🏆 Resultado Final")
@@ -125,6 +119,7 @@ if st.session_state.df_top5 is not None and not st.session_state.df_top5.empty:
             for key in ["letra", "df_top5", "jogo", "tentativas", "chute_input"]:
                 st.session_state.pop(key)
             st.experimental_rerun()
+
 
 
 
